@@ -1,6 +1,5 @@
 package com.dotexe.app.testapplication
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -10,25 +9,19 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.dotexe.app.testapplication.databinding.ActivityMainBinding
+import com.dotexe.app.testapplication.databinding.ActivitySecondBinding
 
-class MainActivity : AppCompatActivity() {
+class SecondActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
-    lateinit var viewModel: MainViewModel
-
-
+    lateinit var binding: ActivitySecondBinding
+    lateinit var viewModel: SecondViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Log.d(">>MainActivity","--onCreate")
-        viewModel = ViewModelProvider(this, MainViewModelFactory()).get(MainViewModel::class.java)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-
+        viewModel = ViewModelProvider(this, SecondViewModelFactory()).get(SecondViewModel::class.java)
+        binding = ActivitySecondBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        Log.d(">>SecondActivity","--onCreate")
 
         viewModel.counterLiveData.observe(this, Observer {
             binding.tvCounter.text  = "$it"
@@ -38,9 +31,6 @@ class MainActivity : AppCompatActivity() {
             viewModel.updateCounter()
         }
 
-        binding.btnNext.setOnClickListener {
-            startActivity(Intent(this, SecondActivity::class.java))
-        }
 
     }
 
@@ -49,31 +39,31 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.d(">>MainActivity","--onStart")
+        Log.d(">>SecondActivity","--onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(">>MainActivity","--onResume")
+        Log.d(">>SecondActivity","--onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d(">>MainActivity","--onPause")
+        Log.d(">>SecondActivity","--onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(">>MainActivity","--onStop")
+        Log.d(">>SecondActivity","--onStop")
     }
 
     override fun onRestart() {
         super.onRestart()
-        Log.d(">>MainActivity","--onStop")
+        Log.d(">>SecondActivity","--onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(">>MainActivity","--onDestroy")
+        Log.d(">>SecondActivity","--onDestroy")
     }
 }
