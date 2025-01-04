@@ -8,39 +8,38 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.dotexe.app.testapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
+    lateinit var viewModel: MainViewModel
 
-    var counterLiveData = MutableLiveData<Int>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         Log.d(">>MainActivity","--onCreate")
-
+        viewModel = ViewModelProvider(this, MainViewModelFactory()).get(MainViewModel::class.java)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
 
 
-        counterLiveData.observe(this, Observer {
+        viewModel.counterLiveData.observe(this, Observer {
             binding.tvCounter.text  = "$it"
         })
 
         binding.btnCounter.setOnClickListener {
-            updateCounter()
+            viewModel.updateCounter()
         }
 
     }
 
-    fun updateCounter(){
-        var count = counterLiveData.value?:0
-        counterLiveData.postValue(count+1)
 
-    }
 
 
     override fun onStart() {
@@ -72,5 +71,4 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         Log.d(">>MainActivity","--onDestroy")
     }
-
 }
